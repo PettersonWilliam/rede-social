@@ -51,4 +51,27 @@ export default class AuthController {
       return res.status(500).json({ error: 'Erro ao autenticar' });
     }
   }
+
+  static async updatePassword(req, res) {
+    try {
+      const { password } = req.body;
+      const userId = req.userId;
+  
+      const user = await User.findByPk(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'Usuário não encontrado' });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 8);
+  
+      await User.update({ password: hashedPassword }, { where: { id: userId } });
+  
+      return res.status(200).json({ message: 'Senha atualizada com sucesso!' });
+  
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Erro ao atualizar senha' });
+    }
+  }
 }

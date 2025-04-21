@@ -1,17 +1,18 @@
 import jwt from 'jsonwebtoken';
 
-export default function authMiddleware(req, res, next) {
+export default function auth(req, res, next) {
 	const authHeader = req.headers.authorization;
 
-	if (!authHeader) {
-		return res.status(401).json({ error: 'Token não enviado' });
-	}
+	if (!authHeader) res.status(401).json({ error: 'Token não enviado' });
 
-	const [, token] = authHeader.split(' '); // Bearer <token>
+	const [type, token] = authHeader.split(' ');
+
+	if (type !== 'Bearer' || !token) {
+		return res.status(401).json({ error: 'Token mal formatado' });
+	}
 
 	try {
 		const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
 		req.userId = decoded.id;
 
 		return next();
@@ -19,4 +20,3 @@ export default function authMiddleware(req, res, next) {
 		return res.status(401).json({ error: 'Token inválido' });
 	}
 }
-
