@@ -1,0 +1,9 @@
+{
+	"development": {
+		"username": "postgres",
+		"password": "32444532Pw",
+		"database": "REDES_SOCIAL",
+		"host": "127.0.0.1",
+		"dialect": "postgres"
+	}
+}
