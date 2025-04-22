@@ -53,6 +53,7 @@ export default class UserController {
 			return res.status(500).json({ error: 'Erro ao buscar usuários' });
 		}
 	}
+
 	static async getUserId(req, res) {
 		try {
 			const { id } = req.params; // Correto: agora extrai 'id' da rota
