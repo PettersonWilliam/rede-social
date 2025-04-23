@@ -4,7 +4,11 @@ export default (sequelize, DataTypes) => {
 		email: DataTypes.STRING,
 		password: DataTypes.STRING
 	}, {
-		tableName: 'users'
+		tableName: 'users',
+		underscored: true,
+		paranoid: true,
+		timestamps: true,
+		deletedAt: 'deleted_at'
 	});
 
 	User.associate = models => {

@@ -1,11 +1,11 @@
 {
-  "type": "module",
   "name": "my-social-app-backendrede-social",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
   "start": "node server.js",
-  "dev": "nodemon server.js"
+  "dev": "nodemon server.js",
+   "migrate": "npx sequelize-cli db:migrate --config config/config.json"
 },
   "keywords": [],
   "author": "",
