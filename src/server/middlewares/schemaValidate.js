@@ -4,7 +4,7 @@ export default {
 			await schema.body.validate(req.body, { abortEarly: false });
 			return next();
 		} catch (err) {
-			return res.status(400).json({ error: err.errors }); // Aqui!
+			return res.status(400).json({ error: err.errors });
 		}
 	}
 };

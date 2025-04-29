@@ -1,7 +1,5 @@
 import db from '../models/index.js';
 const { Post } = db;
-
-
 export default class PostController {
 	static async createPost(req, res) {
 		try {
@@ -17,7 +15,11 @@ export default class PostController {
 
 			return res.status(201).json(post);
 		} catch (err) {
-			return res.status(500).json({ error: 'Erro ao criar post' });
+			console.error(err);
+			return res.status(500).json({ 
+				error: 'Erro ao criar post', 
+				details: process.env.NODE_ENV === 'development' ? err.message : 'Por favor, tente novamente mais tarde.' 
+			});
 		}
 	}
 
@@ -26,8 +28,12 @@ export default class PostController {
 			const posts = await Post.findAll();
 
 			return res.status(200).json(posts);
-		} catch (err) {			
-			return res.status(500).json({ error: 'Erro ao buscar posts' });
+		} catch (err) {
+			console.error(err);
+			return res.status(500).json({ 
+				error: 'Erro ao buscar posts', 
+				details: process.env.NODE_ENV === 'development' ? err.message : 'Por favor, tente novamente mais tarde.' 
+			});
 		}
 	}
 
@@ -42,17 +48,21 @@ export default class PostController {
 
 			return res.status(200).json(post);
 		} catch (err) {
-			return res.status(500).json({ error: 'Erro ao buscar post' });
+			console.error(err);
+			return res.status(500).json({ 
+				error: 'Erro ao buscar post', 
+				details: process.env.NODE_ENV === 'development' ? err.message : 'Por favor, tente novamente mais tarde.' 
+			});
 		}
 	}
 
 	static async updatePost(req, res) {
 		try {
-			const { postId } = req.params;
+			const { id } = req.params;
 			const { title, summary, text, available_at } = req.body;
 
 			const post = await Post.findOne({
-				where: { id: postId }
+				where: { id }
 			});
 
 			if (!post) {
@@ -68,10 +78,13 @@ export default class PostController {
 
 			return res.status(200).json(post);
 		} catch (err) {
-			return res.status(500).json({ error: 'Erro ao atualizar post' });
+			console.error(err);
+			return res.status(500).json({ 
+				error: 'Erro ao atualizar post', 
+				details: process.env.NODE_ENV === 'development' ? err.message : 'Por favor, tente novamente mais tarde.' 
+			});
 		}
 	}
-
 
 	static async deletePost(req, res) {
 		try {
@@ -86,7 +99,11 @@ export default class PostController {
 
 			return res.status(200).json({ message: 'Post deletado com sucesso' });
 		} catch (err) {
-			return res.status(500).json({ error: 'Erro ao deletar post' });
+			console.error(err);
+			return res.status(500).json({ 
+				error: 'Erro ao deletar post', 
+				details: process.env.NODE_ENV === 'development' ? err.message : 'Por favor, tente novamente mais tarde.' 
+			});
 		}
 	}
 }

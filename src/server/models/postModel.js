@@ -1,5 +1,5 @@
-export default (sequelize, DataTypes) => {
-	const Post = sequelize.define('Post', {
+export default (databaseConnection, DataTypes) => {
+	const Post = databaseConnection.define('Post', {
 		user_id: DataTypes.INTEGER,
 		title: DataTypes.STRING,
 		summary: DataTypes.STRING,

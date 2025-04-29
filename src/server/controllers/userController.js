@@ -7,8 +7,8 @@ export default class UserController {
 	static async createUser(req, res) {
 		try {
 			const { name, email, password } = req.body;
-
 			const userExists = await User.findOne({ where: { email } });
+
 			if (userExists) {
 				return res.status(400).json({ error: 'E-mail já cadastrado' });
 			}
@@ -26,9 +26,12 @@ export default class UserController {
 				name: user.name,
 				email: user.email,
 			});
-
 		} catch (err) {
-			return res.status(500).json({ error: 'Erro ao criar usuário' });
+			console.error(err);
+			return res.status(500).json({ 
+				error: 'Erro ao criar usuário', 
+				details: process.env.NODE_ENV === 'development' ? err.message : 'Por favor, tente novamente mais tarde.' 
+			});
 		}
 	}
 
@@ -40,7 +43,11 @@ export default class UserController {
 
 			return res.status(200).json(users);
 		} catch (err) {
-			return res.status(500).json({ error: 'Erro ao buscar usuários' });
+			console.error(err);
+			return res.status(500).json({ 
+				error: 'Erro ao buscar usuários', 
+				details: process.env.NODE_ENV === 'development' ? err.message : 'Por favor, tente novamente mais tarde.' 
+			});
 		}
 	}
 
@@ -59,7 +66,11 @@ export default class UserController {
 
 			return res.status(200).json(user);
 		} catch (err) {
-			return res.status(500).json({ error: 'Erro ao buscar usuário' });
+			console.error(err);
+			return res.status(500).json({ 
+				error: 'Erro ao buscar usuário', 
+				details: process.env.NODE_ENV === 'development' ? err.message : 'Por favor, tente novamente mais tarde.' 
+			});
 		}
 	}
 
@@ -68,7 +79,7 @@ export default class UserController {
 			const { id } = req.params;
 			const { name, email } = req.body;
 
-			const user = await User.findByPk(id);
+			const user = await User.findOne({ where: { id } });
 
 			if (!user) {
 				return res.status(404).json({ error: 'Usuário não encontrado' });
@@ -86,7 +97,11 @@ export default class UserController {
 				message: 'Usuário atualizado com sucesso'
 			});
 		} catch (err) {
-			return res.status(500).json({ error: 'Erro ao atualizar usuário' });
+			console.error(err);
+			return res.status(500).json({ 
+				error: 'Erro ao atualizar usuário', 
+				details: process.env.NODE_ENV === 'development' ? err.message : 'Por favor, tente novamente mais tarde.' 
+			});
 		}
 	}
 
@@ -94,7 +109,7 @@ export default class UserController {
 		try {
 			const { id } = req.params;
 
-			const user = await User.findByPk(id);
+			const user = await User.findOne({ where: { id } });
 
 			if (!user) {
 				return res.status(404).json({ error: 'Usuário não encontrado' });
@@ -104,7 +119,11 @@ export default class UserController {
 
 			return res.status(200).json({ message: 'Usuário deletado com sucesso' });
 		} catch (err) {
-			return res.status(500).json({ error: 'Erro ao deletar usuário' });
+			console.error(err);
+			return res.status(500).json({ 
+				error: 'Erro ao deletar usuário', 
+				details: process.env.NODE_ENV === 'development' ? err.message : 'Por favor, tente novamente mais tarde.' 
+			});
 		}
 	}
 }
