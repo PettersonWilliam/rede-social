@@ -17,7 +17,6 @@ export default class PostController {
 
 			return res.status(201).json(post);
 		} catch (err) {
-			console.log(err, "aquuiiiiiiiiiiii");
 			return res.status(500).json({ error: 'Erro ao criar post' });
 		}
 	}

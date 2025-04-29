@@ -1,5 +1,5 @@
 export default {
-	validate: (schema) => async (req, res, next) => {
+	validate: schema => async (req, res, next) => {
 		try {
 			await schema.body.validate(req.body, { abortEarly: false });
 			return next();
