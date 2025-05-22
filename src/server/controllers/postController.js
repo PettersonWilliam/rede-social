@@ -48,11 +48,11 @@ export default class PostController {
 
 	static async updatePost(req, res) {
 		try {
-			const { postId } = req.params;
+			const { id } = req.params;
 			const { title, summary, text, available_at } = req.body;
 
 			const post = await Post.findOne({
-				where: { id: postId }
+				where: { id }
 			});
 
 			if (!post) {
@@ -71,7 +71,6 @@ export default class PostController {
 			return res.status(500).json({ error: 'Erro ao atualizar post' });
 		}
 	}
-
 
 	static async deletePost(req, res) {
 		try {
