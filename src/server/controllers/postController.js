@@ -5,10 +5,10 @@ const { Post } = db;
 export default class PostController {
 	static async createPost(req, res) {
 		try {
-			const { user_id, title, summary, text, available_at } = req.body;
-			
+			const { title, summary, text, available_at } = req.body;
+
 			const post = await Post.create({
-				user_id,
+				user_id: req.userId,
 				title,
 				summary,
 				text,
@@ -26,7 +26,7 @@ export default class PostController {
 			const posts = await Post.findAll();
 
 			return res.status(200).json(posts);
-		} catch (err) {			
+		} catch (err) {
 			return res.status(500).json({ error: 'Erro ao buscar posts' });
 		}
 	}

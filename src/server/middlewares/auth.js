@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 export default function auth(req, res, next) {
 	const authHeader = req.headers.authorization;
 
-	if (!authHeader) res.status(401).json({ error: 'Token não enviado' });
+	if (!authHeader) return res.status(401).json({ error: 'Token não enviado' });
 
 	const [type, token] = authHeader.split(' ');
 
