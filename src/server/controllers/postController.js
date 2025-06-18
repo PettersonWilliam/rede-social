@@ -59,6 +59,10 @@ export default class PostController {
 				return res.status(404).json({ error: 'Post não encontrado' });
 			}
 
+			if (post.user_id !== req.userId) {
+				return res.status(403).json({ error: 'Você não tem permissão para editar este post' });
+			}
+
 			await post.update({
 				title: title || post.title,
 				summary: summary || post.summary,
@@ -79,6 +83,10 @@ export default class PostController {
 
 			if (!post) {
 				return res.status(404).json({ error: 'Post não encontrado' });
+			}
+
+			if (post.user_id !== req.userId) {
+				return res.status(403).json({ error: 'Você não tem permissão para deletar este post' });
 			}
 
 			await post.destroy();
